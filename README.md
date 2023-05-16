@@ -13,6 +13,9 @@
    - Incorporating dotenv to safely store environment variables
    - Incorporating async await to handle asyncronous operations
   
+  ## Walkthrough Video
+  https://drive.google.com/file/d/1FPHKT3N6VVQm1EuFeO5MkoFPwXxvfR4u/view?usp=sharing
+  
   ## Table of Contents
   
   * [Installation](#installation)

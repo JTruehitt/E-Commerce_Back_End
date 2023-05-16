@@ -19,13 +19,20 @@ router.get("/", async (req, res) => {
 // get one product
 router.get("/:id", async (req, res) => {
   try {
-    const product = await Product.findByPk(req.params.id, { include: [Category, Tag]});
+    const product = await Product.findByPk(req.params.id, {
+      include: [Category, Tag],
+    });
 
-    if (!product) res.status(404).json({ message: `No product with the id of ${req.params.id} was found.`})
+    if (!product)
+      res
+        .status(404)
+        .json({
+          message: `No product with the id of ${req.params.id} was found.`,
+        });
 
     res.status(200).json(product);
   } catch (err) {
-    res.status(500).json({ message: `Error: ${err}`})
+    res.status(500).json({ message: `Error: ${err}` });
   }
 });
 
@@ -75,7 +82,9 @@ router.put("/:id", (req, res) => {
     })
     .then((productTags) => {
       // get list of current tag_ids
-      const productTagIds = productTags.map((productTag) => productTag.dataValues.tag_id);
+      const productTagIds = productTags.map(
+        (productTag) => productTag.dataValues.tag_id
+      );
       // create filtered list of new tag_ids
       const newProductTags = req.body.tagIds
         .filter((tag_id) => !productTagIds.includes(tag_id))
@@ -99,27 +108,28 @@ router.put("/:id", (req, res) => {
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
       // console.log(err);
-      res.status(400).json({ message: `Error: ${err}`});
+      res.status(400).json({ message: `Error: ${err}` });
     });
 });
-
 
 router.delete("/:id", async (req, res) => {
   // delete one product by its `id` value
   try {
-    const product = await Product.findByPk(req.params.id)
+    const product = await Product.findByPk(req.params.id);
 
     if (!product) {
-      return res.status(404).json({ message: 'No product with that id was found.'})
+      return res
+        .status(404)
+        .json({ message: "No product with that id was found." });
     }
 
-    await product.destroy()
+    await product.destroy();
 
-    const allProducts = await Product.findAll()
+    const allProducts = await Product.findAll();
 
-    res.status(200).json(allProducts)
+    res.status(200).json(allProducts);
   } catch (err) {
-    res.status(500).json({ message: `Error: ${err}`})
+    res.status(500).json({ message: `Error: ${err}` });
   }
 });
 
